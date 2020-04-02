@@ -6,10 +6,12 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && apk add -U tzdata \
     && ls /usr/share/zoneinfo \
     && apk add  --no-cache libmcrypt-dev freetype-dev libjpeg-turbo-dev libpng-dev autoconf  gcc g++ make unixodbc-dev \  
+    #  && curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.5.2.1-1_amd64.apk  \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && sudo apk add --allow-untrusted msodbcsql17_17.5.2.1-1_amd64.apk \
     && apk del tzdata
-# unixodbc-dev 装pdo_sqlsrv，sqlsrv 才需要装  
-# 通过pecl安装扩展的时候 一定要装 gcc g++
+# unixodbc-dev msodbcsql17装pdo_smsodbcsql17qlsrv，sqlsrv 才需要装  
+# 通过pecl安装扩展的时候 一定要装 gcc g++ 
 # Libs
 RUN  docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd mysqli pdo_mysql\
