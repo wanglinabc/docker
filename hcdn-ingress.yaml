@@ -1,0 +1,109 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hcdn-ingress
+  namespace: hcdn
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: www.declive-server.com    #升级平台
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: declive-admin-server
+                port:
+                  number: 8888
+    - host: www.declive-scheduler-server.com  #调度服务
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: declive-scheduler-server
+                port:
+                  number: 12001
+    - host: www.declive-stbinfo-server.com    #查询服务
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: declive-stbinfo-server
+                port:
+                  number: 10180
+    - host: www.declive-slice-server.com  #分片服务
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: declive-slice-server
+                port:
+                  number: 10003
+    - host: www.gateway-server.com   #网关服务
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gateway-server
+                port:
+                  number: 8073
+    - host: www.ec-config-server.com  #配置服务
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ec-config-server
+                port:
+                  number: 8074
+    - host: www.stun-service.com  #stun服务
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stun-service
+                port:
+                  number: 3478
+    - host: www.ec-nodecontroller-server.com  #节点索引服务
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ec-node-controller-server
+                port:
+                  number: 8072
+    - host: www.lc-wsserver.com  #长链接ws
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lc-ws-server
+                port:
+                  number: 8074
+    - host: www.lc-httpserver.com  #长链接http
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lc-http-server
+                port:
+                  number: 8076
